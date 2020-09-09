@@ -8,7 +8,7 @@ const session = require('express-session');
 const becrypt = require("bcryptjs");
 
 const app = express();
-const port = process.env.PORT || 1970;
+const port = process.env.PORT || 5000;
 
 
 // IMPORT ROUTES
