@@ -59,13 +59,17 @@ nav .userDetail input{
 .ticket{
     position: relative;
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 25% 75%;
     text-transform: uppercase;
 }
 
 .ticket > div:nth-child(even){
     text-align: right;
     display: block;
+}
+
+.ticket > *{
+    text-align: left !important;
 }
 
 .big > *{

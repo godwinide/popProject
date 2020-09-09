@@ -1,5 +1,5 @@
 function padAccountNum(num) {
-    if (String(num).length == 11) {
+    if (String(num).length >= 11) {
         return num;
     }
     else {
