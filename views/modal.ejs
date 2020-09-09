@@ -1,0 +1,208 @@
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Transaction Record</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="my_camera" style="width: auto; height: auto;"></div>
+                <form action="/" , method="POST">
+                    <input type="hidden" name="imgURI" value="" id="result">
+                    <input type="hidden" name="date" value="" id="dateInput">
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="accountName">Account Name</label>
+                            <input name="name" type="text" class="form-control" id="accountName"
+                                placeholder="Account Name" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="clientName">Client's Name</label>
+                            <input name="clientName" type="text" class="form-control" id="clientName"
+                                placeholder="Client's Name" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="bankName">Bank Name</label>
+                            <input name="bankName" type="text" class="form-control" id="bankName" value="firstbank"
+                                required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="amountField">Amount</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">(₦)</span>
+                                </div>
+                                <input name="amount" class="form-control" id="amountField" placeholder="Amount"
+                                    aria-describedby="inputGroupPrepend2" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefaultUsername">Fee</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">(₦)</span>
+                                </div>
+                                <input name="fee" class="form-control" value=0 aria-describedby="inputGroupPrepend2"
+                                    id="feeField" readonly required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefaultUsername">Balance</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroupPrepend2">(₦)</span>
+                                </div>
+                                <input value="<%= user.cash %>" name="balance" class="form-control" id="balanceField"
+                                    placeholder="Account Balance" aria-describedby="inputGroupPrepend2" readonly
+                                    required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefaultaccno">Account Number</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroupPrepend2">#</span>
+                                </div>
+                                <input type="number" name="accNum" class="form-control" id="validationDefaultaccno"
+                                    placeholder="Account Number" aria-describedby="inputGroupPrepend2" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefaultaccno">Reference Number</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroupPrepend2">#</span>
+                                </div>
+                                <input type="number" class="form-control" id="validationDefaultaccno"
+                                    placeholder="Reference Number" name="refNum" aria-describedby="inputGroupPrepend2"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefaultaccno">Customer Phone Number</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroupPrepend2">#</span>
+                                </div>
+                                <input type="number" name="customerNum" class="form-control" id="validationDefaultaccno"
+                                    placeholder="Customer Phone Number" aria-describedby="inputGroupPrepend2">
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="inputStatus">Transaction Type</label>
+                            <select id="traType" class="form-control" name="type">
+                                <option selected>Credit</option>
+                                <option>Debit</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="inputStatus">Card Type</label>
+                            <select class="form-control" name="card" id="cardType">
+                                <option selected>Verve</option>
+                                <option>Mastercard</option>
+                                <option>Visa</option>
+                                <option>Cash</option>
+                                <option>Transfer</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="inputStatus">Transaction Status</label>
+                            <select id="inputStatus" class="form-control" name="status">
+                                <option>Pending</option>
+                                <option selected>Success</option>
+                                <option>Declined</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- hidden camera preview -->
+
+
+
+<script src="/js/webcam.min.js"></script>
+<script src="/js/validate.js"></script>
+
+<script>
+
+
+    window.onload = () => {
+        // format numbers
+        // add comma to amount
+        var cleaveNumeral = new Cleave('#feeField', {
+            numeral: true,
+            numeralThousandsGroupStyle: 'thousand'
+        });
+        var cleaveNumera2 = new Cleave('#amountField', {
+            numeral: true,
+            numeralThousandsGroupStyle: 'thousand'
+        });
+        var cleaveNumera3 = new Cleave('#balanceField', {
+            numeral: true,
+            numeralThousandsGroupStyle: 'thousand'
+        });
+    }
+
+    setTimeout(() => { initCam() }, 10)
+
+    function initCam() {
+
+        // attach camera
+        Webcam.set({
+            // live preview size
+            width: 520,
+            height: 320,
+
+            // device capture size
+            dest_width: 520,
+            dest_height: 320,
+
+            // final cropped size
+            crop_width: 520,
+            crop_height: 320,
+
+            // format and quality
+            image_format: 'jpeg',
+            jpeg_quality: 90,
+
+            // flip horizontal (mirror mode)
+            flip_horiz: false
+        });
+
+        Webcam.on('error', function (err) {
+            console.log(err)
+        });
+
+        Webcam.attach('#my_camera');
+
+        // capture and add uri to input
+        window.addEventListener("keydown", e => {
+            if (e.keyCode == 17) {
+                Webcam.freeze();
+                Webcam.snap((data_uri) => {
+                    // add result in input
+                    document.getElementById('result').value = data_uri;
+                });
+
+                // shut down camera, stop capturing
+                Webcam.unfreez();
+                Webcam.reset();
+                initCam()
+            }
+        })
+    }
+
+</script>

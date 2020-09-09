@@ -1,0 +1,160 @@
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand ml-5 firstmoney" href="/">
+        <span class="text-info">Enaland NIG </span><span class="text-warning">Limited</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav m-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/">
+                    Home
+                </a>
+            </li>
+
+            <% if (req.user.isAdmin) { %>
+            <li class="nav-item">
+                <a class="nav-link active" href="/dashboard">
+                    Dashboard <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/project">
+                    Projects
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="/admin">
+                    Admin
+                    <i class="fas fa-user-shield pl-2"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <% } %>
+                <form action="/auth/logout" method="post">
+                    <button type="submit" class="btn nav-item btn-info text-white">
+                        Logout
+                        <i class="fas fa-sign-out-alt pl-2"></i>
+                    </button>
+                </form>
+            </li>
+            <div class="userDetail">
+                <li class="nav-item">
+                    <span class="pl-5 text-white" style="font-size: 1.4em;">Cash left: </span>: <input class="cashnav"
+                        type="text" value="<%= req.user.cash %>" readonly
+                        style="background: transparent; color: yellow; font-size: 1.3em; border: none;" />
+                </li>
+            </div>
+        </ul>
+    </div>
+</nav>
+
+
+
+<div class="dashboard container">
+    <h3 class="text-center text-bold text-info pt-5">Transactions Dashboard</h3>
+
+    <div class="today mt-3 mb-4">
+        <h4 class="text-center ">Today So Far</h4>
+        <hr>
+        <div class="dashboardT">
+            <div class="rounded">
+                <h4><span class="badge bg-info text-white"><%= transData.numDebitsToday %> </span> Debits </h4>
+                <h3 class="text-warning" id="num1">N<%= transData.debitsToday %></h3>
+            </div>
+            <div class="rounded">
+                <h4><span class="badge bg-info text-white"><%= transData.numCreditToday %></span> Credits </h4>
+                <h3 class="text-warning" id="num2">N<%= transData.creditToday %></h3>
+            </div>
+            <div class="rounded">
+                <h4><span class="badge bg-info text-white"><%= transData.numTransToday %> </span> Transfers </h4>
+                <h3 class="text-warning" id="num3">N<%= transData.transToday %> </h3>
+            </div>
+            <div class="rounded ex1">
+                <h4>Profit</h4>
+                <h3 class="" id="num4">N<%= transData.profitsToday %></h3>
+            </div>
+        </div>
+        <div class="dashboardT2">
+            <div class="rounded">
+                <h4>Current Balance</h4>
+                <h3 class="" id="num4">
+                    N<%= parseInt(transData.creditToday) - (parseInt(transData.transToday) + parseInt(transData.debitsToday)) %>
+                </h3>
+            </div>
+            <div class="rounded ex2">
+                <h4> Totol Balance</h4>
+                <h3 class="" id="num4">
+                    N<%= (parseInt(transData.creditToday) - (parseInt(transData.transToday) + parseInt(transData.debitsToday))) + transData.profitsToday%>
+                </h3>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="today mt-3 mb-4">
+        <h4 class="text-center text-bold ">This month</h4>
+        <hr>
+        <div class="dashboardT">
+            <div class="rounded">
+                <h4><span class="badge bg-info text-white"><%= transData.numDebitsThisMonth %> </span> Debits </h4>
+                <h3 class="text-warning" id="num5">N<%= transData.debitsThisMonth %> </h3>
+            </div>
+            <div class="rounded">
+                <h4><span class="badge bg-info text-white"><%= transData.numCreditThisMonth %> </span> Credits </h4>
+                <h3 class="text-warning" id="num6">N<%= transData.creditThisMonth %> </h3>
+            </div>
+            <div class="rounded">
+                <h4><span class="badge bg-info text-white"><%= transData.numTransThisMonth %> </span> Transfers </h4>
+                <h3 class="text-warning" id="num7">N<%= transData.transThisMonth %> </h3>
+            </div>
+            <div class="rounded">
+                <h4>Profit </h4>
+                <h3 class="" id="num8">N<%= transData.profitsThisMonth %></h3>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        var cleaveNumer = new Cleave('#num1', {
+            numeral: true,
+            numeralThousandsGroupStyle: 'thousand'
+        });
+        var cleaveNumera2 = new Cleave('#num2', {
+            numeral: true,
+            numeralThousandsGroupStyle: 'thousand'
+        });
+        var cleaveNumera3 = new Cleave('#num3', {
+            numeral: true,
+            numeralThousandsGroupStyle: 'thousand'
+        });
+        var cleaveNumera4 = new Cleave('#num4', {
+            numeral: true,
+            numeralThousandsGroupStyle: 'thousand'
+        });
+        var cleaveNumera5 = new Cleave('#num5', {
+            numeral: true,
+            numeralThousandsGroupStyle: 'thousand'
+        });
+        var cleaveNumera6 = new Cleave('#num6', {
+            numeral: true,
+            numeralThousandsGroupStyle: 'thousand'
+        });
+        var cleaveNumera7 = new Cleave('#num7', {
+            numeral: true,
+            numeralThousandsGroupStyle: 'thousand'
+        });
+        var cleaveNumera8 = new Cleave('#num8', {
+            numeral: true,
+            numeralThousandsGroupStyle: 'thousand'
+        });
+    </script>
+
+</div>
+
+<%- include("footer") %>

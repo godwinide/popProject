@@ -1,0 +1,30 @@
+<div style="height: 100vh; overflow:hidden" class="login-bg">
+    <div class="dark"></div>
+    <div class="login-bg1" style="margin-top: 7%; z-index: 2;">
+        <h2 class="text-center text-white">Enaland NIG Limited &trade;</h2>
+    </div>
+
+
+
+    <div class="login mt-4">
+        <div class="col-md-6 mx-auto">
+            <div class="card card-body bg-dark">
+                <h1 class="text-center pb-3 text-info"><i class="fas fa-sign-in-alt"></i> Login</h1>
+                <% include ./partials/messages %>
+                <form action="/auth/login" method="POST" class="text-white text-bold" autocomplete="on">
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="username" id="username" name="username" class="form-control"
+                            placeholder="Enter Username" />
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" class="form-control"
+                            placeholder="Enter Password" autocomplete="new-password" />
+                    </div>
+                    <button type="submit" class="btn btn-info btn-block">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

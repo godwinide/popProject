@@ -1,0 +1,101 @@
+<!-- show table -->
+
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand ml-5 firstmoney" href="/">
+        <span class="text-info">Enaland NIG </span><span class="text-warning">Limited</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav m-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/">
+                    Home
+                </a>
+            </li>
+
+            <% if (req.user.isAdmin) { %>
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard">
+                    Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/project">
+                    Projects <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin">
+                    Admin
+                    <i class="fas fa-user-shield pl-2"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <% } %>
+                <form action="/auth/logout" method="post">
+                    <button type="submit" class="btn nav-item btn-info text-white">
+                        Logout
+                        <i class="fas fa-sign-out-alt pl-2"></i>
+                    </button>
+                </form>
+            </li>
+            <div class="userDetail">
+                <li class="nav-item">
+                    <span class="pl-5 text-white" style="font-size: 1.4em;">Cash left: </span>: <input class="cashnav"
+                        type="text" value="<%= req.user.cash %>" readonly
+                        style="background: transparent; color: yellow; font-size: 1.3em; border: none;" />
+                </li>
+            </div>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="project-wrapper">
+
+    <% if(project.length < 1){ %>
+
+
+    <div class="container sorryText">
+        <h3 class="text-center">Sorry you have no projects, yet.</h3>
+        <a href="/project/create" class="btn btn-info p-2">
+            <i class="fas fa-plus"></i>
+            New Project
+        </a>
+    </div>
+
+
+    <% } else{ %>
+    <div class="container mt-3">
+        <div class="container">
+            <a href="/project/create" class="btn btn-info p-2">
+                <i class="fas fa-plus"></i>
+                Add Project
+            </a>
+        </div>
+        <div class="container expense-grid">
+
+            <% project.forEach(p =>{ %>
+            <div class="bg-info">
+                <div>
+                    <h2><%= p.name %></h2>
+                    <hr>
+                    <h1 class="lead text-white">Total Budget - (₦) <%= p.budget %></h1>
+                    <h1 class="lead text-white">Budget Left - (₦) <%= p.budgetRemain %></h1>
+                    <h1 class="lead text-white">Expenses - <%= p.expenses ? p.expenses.length : 0 %></h1>
+                    <a href="/project/detail/<%= p._id %>" class="btn btn-primary">View</a>
+                </div>
+            </div>
+            <% }) %>
+        </div>
+        <% } %>
+
+
+    </div>
+
+
+    <%- include("../footer") %>

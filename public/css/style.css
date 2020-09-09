@@ -1,0 +1,256 @@
+body{
+    font-weight: bold;
+}
+h1,h2,h3,h4{
+    text-transform: uppercase;
+    font-family: 'ABeeZee', sans-serif;
+}
+
+nav .userDetail span,
+nav .userDetail input{
+    font-size: 1em !important;
+    color: #fff !important;
+}
+
+.firstmoney{
+    font-family: 'ABeeZee', sans-serif;
+}
+
+.firstmoney-logo{
+    height: 4em;
+    width: 12em;
+}
+
+.reg{
+    background: url("../img/firstmonie.jpg");
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+
+.login{
+    height: 100vh;
+    margin: auto;
+}
+
+.login > div {
+    background: transparent;
+}
+
+.logo-wrap{
+    margin: 1em auto;
+    display: block;
+    width: 50%;
+    text-align: center;
+}
+
+.logo {
+    text-align: center;
+    display: block;
+    margin: auto;
+    text-align: center;
+}
+
+.logo-wrap h2{
+    text-align: left;
+}
+
+.ticket{
+    position: relative;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    text-transform: uppercase;
+}
+
+.ticket > div:nth-child(even){
+    text-align: right;
+    display: block;
+}
+
+.big > *{
+    font-size: 2em;
+    font-weight: bolder;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #fff;
+    color: #000;
+}
+
+.dashboard{
+    min-height: 100vh;
+    width: 100%;
+    font-size: 1em !important;
+}
+
+.dashboard h1,h2,h3,h4{
+    font-size: 1.1em !important;
+}
+
+.dashboardT{
+    display: grid;
+    grid-template-columns: 49% 49%;
+    grid-gap: 1%;
+}
+
+.dashboardT2{
+    display: grid;
+    grid-template-columns: 49% 49%;
+    grid-gap: 1%;
+}
+.dashboardT > div{
+    background: #fff;
+    padding: 1em;
+    box-shadow: 3px 4px 5px #000;
+}
+.dashboardT2 > div{
+    margin-top: 1rem;
+    background: rgba(0, 0, 0, 0.678);
+    padding: 1em;
+}
+
+.dashboardT2 h3,
+.dashboardT2 h4{
+    font-size: 1em !important;
+    color: #fff;
+}
+
+.smalls{
+    color: #fff;
+    background: #2d3033;
+}
+
+#printableArea{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 100%;
+}
+
+.login-bg{
+    position: relative;
+    background: url(/img/bg5.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: all .6s ease;
+    z-index: 1;
+}
+.login-bg1{
+    position: relative;
+    z-index: 1;
+}
+.dark{
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.658);
+}
+
+.captured-image{
+    width: 500px;
+    height: 500px;
+    margin: 0 auto;
+    padding: 1em 3em;
+    position: relative;
+    border-radius: 20px;
+    margin: auto;
+    display: block;
+}
+
+.captured-image > img{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+#my_camera{
+    margin: 0 auto .5em -1.9em;
+    padding: 0;
+    width: auto;
+    height: auto;
+}
+
+
+
+.project-wrapper{
+    min-height: 100vh;
+    top: 0;
+    left: 0;
+}
+
+.sorryText{
+    color: rgb(99, 96, 96);
+    border: 5px dotted #000;
+    height: 20rem;
+    display: flex;
+    margin: 2em auto;
+    flex-direction: column;;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+
+/* project */
+
+.create-wrapper{
+    background: rgba(0, 0, 0, 0.63);
+    min-height: 100vh;
+    position: relative;
+}
+
+.create-wrapper::before{
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url(/img/bg5.jpg);
+    z-index: -1;
+    padding: 3em 0;
+}
+
+.c-header {
+    color: #fff;
+    padding-top: 20px;
+}
+
+.category-item{
+    display: inline-block;
+    list-style: none;
+    padding: 5px;
+    background: #fff;
+    color: #000;
+    margin: auto .3em .3em auto;
+}
+
+
+
+
+.category-holder{
+    /* display: flex; */
+}
+
+
+.expense-grid{
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-gap: 1%;
+    margin: 2em auto;
+}
+
+.expense-grid > div {
+    background: rgb(163, 160, 160);
+    padding: 10px;
+    color: #fff;
+}
+
+.action-btn{
+    text-align: right;
+    width: 100%;
+}
+
+.logo{
+    width: 3em;
+    height: 3em;
+}

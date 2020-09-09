@@ -1,0 +1,159 @@
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand ml-5 firstmoney" href="/">
+        <span class="text-info">Enaland NIG </span><span class="text-warning">Limited</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav m-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/">
+                    Home
+                </a>
+            </li>
+
+            <% if (req.user.isAdmin) { %>
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard">
+                    Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/project">
+                    Projects
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/admin">
+                    Admin <span class="sr-only">(current)</span>
+                    <i class="fas fa-user-shield pl-2"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <% } %>
+                <form action="/auth/logout" method="post">
+                    <button type="submit" class="btn nav-item btn-info text-white">
+                        Logout
+                        <i class="fas fa-sign-out-alt pl-2"></i>
+                    </button>
+                </form>
+            </li>
+        </ul>
+        <div class="userDetail">
+            <li class="nav-item">
+                <span class="pl-5 text-white" style="font-size: 1.4em;">Cash left: </span>: <input class="cashnav"
+                    type="text" value="<%= req.user.cash %>" readonly
+                    style="background: transparent; color: yellow; font-size: 1.3em; border: none;" />
+            </li>
+        </div>
+    </div>
+</nav>
+
+<div class="mt-3">
+    <% include ./partials/messages %>
+</div>
+
+<div class="userDetails">
+    <h2 class="text-center my-4">User Details</h2>
+
+    <div class="user">
+        <div class="profile-pic text-center">
+            <i class="fas fa-user" style="font-size: 12em"></i>
+        </div>
+
+        <form class="container mt-5" action="/users/<%= user.id %>" method="POST">
+            <h4><%= user.username %> info</h4>
+            <hr>
+            <div class="form-group row">
+                <label for="username" class="col-sm-2 col-form-label">First Name</label>
+                <div class="col-sm-10">
+                    <input type="name" class="form-control" id="firstname" placeholder="First Name"
+                        value="<%= user.firstname %>" readonly>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="lastname" class="col-sm-2 col-form-label">Last Name</label>
+                <div class="col-sm-10">
+                    <input type="username" class="form-control" id="lastname" placeholder="Last Name"
+                        value="<%= user.lastname %>" readonly>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="username" class="col-sm-2 col-form-label">User Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="username" placeholder="User Name"
+                        value="<%= user.username %>" readonly>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="cash" class="col-sm-2 col-form-label">Cash Left</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="cash" placeholder="Cash Left" value="<%= user.cash %>"
+                        name="cash" id="cash" readonly>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="cash" class="col-sm-2 col-form-label">Attendant ID</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="cash" placeholder="attendantID"
+                        value="<%= user.attendantID %>" readonly>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="password" class="col-sm-2 col-form-label">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" name="password" class="form-control" id="password" placeholder="Password"
+                        value="">
+                </div>
+            </div>
+
+            <button class="btn btn-info" type="submit">Update</button>
+        </form>
+
+        <div class="container mt-4">
+            <h4 class="text-danger">Danger</h4>
+            <hr>
+            <div class="conatiner mb-2">
+                <% if(user.isActive){ %>
+                <form class="container mt-5" action="/users/disable/<%= user.id %>" method="POST"
+                    style="display: inline">
+                    <button class="btn btn-warning text-white mr-4" style="background: rgb(197, 197, 38); border: none;"
+                        type="submit">Disable
+                        User
+                        <i class="fas fa-user-lock"></i>
+                    </button>
+                </form>
+                <% } else{ %>
+                <form class="container mt-5 ml-1" action="/users/enable/<%= user.id %>" method="POST"
+                    style="display: inline">
+                    <button class="btn btn-success" type="submit">Enable User
+                    </button>
+                </form>
+                <% } %>
+
+                <form class="container mt-5 ml-1" action="/users/delete/<%= user.id %>" method="POST"
+                    style="display: inline">
+                    <button class="btn btn-danger" type="submit">Delete User
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var cleaveNumera2 = new Cleave('#cash', {
+        numeral: true,
+        numeralThousandsGroupStyle: 'thousand'
+    });
+</script>
+
+<div>
+    <%- include('footer') %>
+</div>

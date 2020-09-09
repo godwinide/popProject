@@ -1,0 +1,49 @@
+<div class="table-responsive-md" width="100%">
+    <table id="myTable" class="table table-striped table-bordered w-auto" cellspacing="0" width="100%"
+        style="border-collapse:collapse; border:none; text-transform:uppercase">
+        <thead class="text-white bg-dark">
+            <tr>
+                <th class="th-sm">ID
+
+                </th>
+                <th class="th-sm">Stake
+
+                </th>
+                <th class="th-sm">Payout
+
+                </th>
+                <th class="th-sm">Action
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <% bets.forEach(e =>{ %>
+            <tr class="text-white"></tr>
+            <td><%= e.id.slice(0,5) %></td>
+            <td><%= e.stake %></td>
+            <td><%= e.potWin %></td>
+            <td>
+                <button urlLink="/ticket/print/<%= e.id %>" p_id="<%= e._id %>" class="betPrinter btn btn-info">
+                    print</button>
+            </td>
+            </tr>
+            <% }) %>
+        </tbody>
+        <tfoot class="bg-dark text-white">
+            <tr>
+                <th class="th-sm">ID
+                </th>
+                <th class="th-sm">Stake
+                </th>
+                <th class="th-sm">Payout
+                </th>
+                <th class="th-sm">Action
+                </th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<script src="/js/betPrinter.js"></script>

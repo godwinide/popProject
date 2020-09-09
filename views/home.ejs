@@ -1,0 +1,119 @@
+<!-- show table -->
+
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand ml-5 firstmoney" href="/">
+        <span class="text-info">Enaland NIG </span><span class="text-warning">Limited</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav m-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">
+                    Home <span class="sr-only">(current)</span>
+                </a>
+            </li>
+
+            <% if (req.user.isAdmin) { %>
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard">
+                    Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/project">
+                    Projects
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin">
+                    Admin
+                    <i class="fas fa-user-shield pl-2"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <% } %>
+                <form action="/auth/logout" method="post">
+                    <button type="submit" class="btn nav-item btn-info text-white">
+                        Logout
+                        <i class="fas fa-sign-out-alt pl-2"></i>
+                    </button>
+                </form>
+            </li>
+            <div class="userDetail">
+                <li class="nav-item">
+                    <span class="pl-5 text-white" style="font-size: 1.4em;">Cash left: </span>: <input class="cashnav"
+                        type="text" value="<%= req.user.cash %>" readonly
+                        style="background: transparent; color: yellow; font-size: 1.3em; border: none;" />
+                </li>
+            </div>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="mt-2">
+    <% include ./partials/messages %>
+</div>
+
+<hr>
+<form action="/findByDate" method="POST" class="mt-4">
+    <!-- date piker from -->
+
+    <div class="container row">
+        <div class="input-append date form_datetime1 col-md-2">
+            <span>From:</span>
+            <input name="fromDate" size="16" type="text" value="" readonly class="form-control"
+                placeholder="enter date">
+            <span class="add-on"><i class="icon-th"></i></span>
+        </div>
+
+        <!-- date piker to -->
+        <div class="input-append date form_datetime2 col-md-2">
+            <span>To:</span>
+            <input name="toDate" size="16" type="text" readonly class=" form-control" placeholder="enter date">
+            <span class="add-on"><i class="icon-th"></i></span>
+        </div>
+
+        <div class="col-md-8 text-left">
+            <button class="btn btn-info mt-4" type="submit">Show</button>
+        </div>
+    </div>
+</form>
+
+<hr>
+
+
+
+
+<div>
+    <%- include('table', {trans, user, moment}) %>
+</div>
+
+<footer class="footer">
+    <%- include('footer') %>
+</footer>
+
+<script src="/js/jquerymin.js"></script>
+<script src="/js/bootstrap-datetimepicker.min.js"></script>
+<script src="/js/posPrinter.js"></script>
+
+<script>
+    // date piker
+    $(".form_datetime1").datetimepicker({
+        format: "dd MM yyyy hh:ii",
+        autoclose: true,
+        todayBtn: true,
+        // pickerPosition: "bottom-right"
+    });
+
+    $(".form_datetime2").datetimepicker({
+        format: "dd MM yyyy hh:ii",
+        autoclose: true,
+        todayBtn: true,
+        // pickerPosition: "bottom-left"
+    });
+</script>

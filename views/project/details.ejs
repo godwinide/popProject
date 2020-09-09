@@ -1,0 +1,185 @@
+<!-- show table -->
+
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand ml-5 firstmoney" href="/">
+        <span class="text-info">Enaland NIG </span><span class="text-warning">Limited</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav m-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/">
+                    Home
+                </a>
+            </li>
+
+            <% if (req.user.isAdmin) { %>
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard">
+                    Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/project">
+                    Projects <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin">
+                    Admin
+                    <i class="fas fa-user-shield pl-2"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <% } %>
+                <form action="/auth/logout" method="post">
+                    <button type="submit" class="btn nav-item btn-info text-white">
+                        Logout
+                        <i class="fas fa-sign-out-alt pl-2"></i>
+                    </button>
+                </form>
+            </li>
+            <div class="userDetail">
+                <li class="nav-item">
+                    <span class="pl-5 text-white" style="font-size: 1.4em;">Cash left: </span>: <input class="cashnav"
+                        type="text" value="<%= req.user.cash %>" readonly
+                        style="background: transparent; color: yellow; font-size: 1.3em; border: none;" />
+                </li>
+            </div>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="project-wrapper">
+    <div class="container expense-grid">
+        <div class="bg-info">
+            <div>
+                <h2>Total Budget</h2>
+                <h1 class="display-4 text-warning">(₦) <%= project.budget %></h1>
+            </div>
+        </div>
+        <div class="bg-info">
+            <div>
+                <h2>Budget Left</h2>
+                <h1 class="display-4 text-warning">(₦) <%= project.budgetRemain %></h1>
+            </div>
+        </div>
+        <div class="bg-info">
+            <div>
+                <h2>Total Expenses</h2>
+                <h1 class="display-4 text-warning"><%= project.expenses? project.expenses.length : 0 %></h1>
+            </div>
+        </div>
+    </div>
+    <div class="action-btn container">
+        <!-- delete project -->
+        <div class="container mx-5 p-5">
+            <p class="lead">Delete Project</p>
+            <form action="/project/detail/d" method="post">
+                <input type="hidden" name="id" value="<%= project.id %>">
+                <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-trash"></i>
+                    Delete Project</button>
+            </form>
+        </div>
+        <button class="btn btn-info left" data-toggle="modal" data-target="#exampleModal1">
+            <i class="fas fa-plus"></i>
+            Add Expenses
+        </button>
+    </div>
+    <div class="expenses-list mt-3">
+        <table class="table table-borderless  container mx-auto">
+            <thead>
+                <tr class="table-info">
+                    <th scope="col">Title</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody class="table-secondary">
+                <% if(project.expenses){ %>
+                <% project.expenses.forEach(e => { %>
+                <tr>
+                    <td><%= e.expense %></td>
+                    <td>(₦) <%= e.amount %></td>
+                    <td><%= e.category %></td>
+                    <td>
+                        <form action="/project/detail/expenses/d" method="post">
+                            <input type="hidden" name="id" , value="<%= project._id %>">
+                            <input type="hidden" name="e_id" value="<%= e.id %>">
+                            <input type="hidden" name="amt" value="<%= e.amount %>">
+                            <button type="submit" class="btn btn-danger">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+                <% }) %>
+                <% } %>
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!-- modal -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Expense</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="my_camera" style="width: auto; height: auto;"></div>
+                <form action="/project/detail/expenses/" , method="POST">
+                    <input type="hidden" name="imgURI" value="" id="result">
+                    <input type="hidden" name="date" value="" id="dateInput">
+                    <div class="form-row">
+                        <div class="col-md-12 mb-3">
+                            <label for="accountName">Title</label>
+                            <input name="newExpense" type="text" class="form-control" id="accountName"
+                                placeholder="Account Name" required>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="amountField">Amount</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">(₦)</span>
+                                </div>
+                                <input name="amount" class="form-control" id="amountField" placeholder="Amount"
+                                    aria-describedby="inputGroupPrepend2" required>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="inputStatus">Category</label>
+                            <select class="form-control" name="category" id="cardType">
+                                <% project.category.forEach(c => { %>
+                                <option><%= c %></option>
+                                <% }) %>
+                            </select>
+                        </div>
+                        <input type="hidden" name="id" , value="<%= project._id %>">
+                    </div>
+                    <button class="btn btn-primary" type="submit">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<%- include("../footer") %>

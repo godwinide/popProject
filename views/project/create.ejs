@@ -1,0 +1,91 @@
+<!-- show table -->
+
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand ml-5 firstmoney" href="/">
+        <span class="text-info">Enaland NIG </span><span class="text-warning">Limited</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav m-auto">
+            <li class="nav-item ">
+                <a class="nav-link" href="/">
+                    Home
+                </a>
+            </li>
+
+            <% if (req.user.isAdmin) { %>
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard">
+                    Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/project">
+                    Projects <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin">
+                    Admin
+                    <i class="fas fa-user-shield pl-2"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <% } %>
+                <form action="/auth/logout" method="post">
+                    <button type="submit" class="btn nav-item btn-info text-white">
+                        Logout
+                        <i class="fas fa-sign-out-alt pl-2"></i>
+                    </button>
+                </form>
+            </li>
+            <div class="userDetail">
+                <li class="nav-item">
+                    <span class="pl-5 text-white" style="font-size: 1.4em;">Cash left: </span>: <input class="cashnav"
+                        type="text" value="<%= req.user.cash %>" readonly
+                        style="background: transparent; color: yellow; font-size: 1.3em; border: none;" />
+                </li>
+            </div>
+        </ul>
+    </div>
+</nav>
+
+
+
+<div class="create-wrapper">
+    <h2 class="text-center c-header">Create A New Project</h2>
+    <form action="/project/create" class="text-white project-form" method="POST"
+        style="width: 60%; margin: 4rem auto; border: 2px solid #000; border-radius: 10px; padding: 2em; background: rgb(28, 142, 187);">
+        <div class="container"> <% include ../partials/messages %></div>
+        <div class="form-group">
+            <label for="name">Project Name</label>
+            <input type="name" id="firstname" name="name" class="form-control" placeholder="Enter Project Name"
+                value="<%= typeof name != 'undefined' ? name : '' %>" />
+        </div>
+        <div class="form-group">
+            <label for="budget">Budget(N)</label>
+            <input type="number" id="budget" name="budget" class="form-control" placeholder="enter your budget"
+                value="<%= typeof budget != 'undefined' ? budget : '' %>" />
+        </div>
+        <div class="form-group">
+            <label for="budget">Expense Category</label>
+            <input type="text" id="categoryInput" name="category" class="form-control"
+                placeholder="separate categories with a space" />
+        </div>
+        <button type="submit" class="btn btn-dark btn-block text-white" style="font-weight: bold;">
+            Create
+        </button>
+    </form>
+</div>
+
+
+</div>
+
+<script src="/js/projectjs.js"></script>
+
+
+<%- include("../footer") %>

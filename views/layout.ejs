@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="description" content="A banking and POS management system for Enaland Benin city.">
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="theme-color" content="#000000" />
+    <link rel="shortcut icon" href="/img/enaland.png" type="image/x-icon">
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+        integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=ABeeZee&display=swap" rel="stylesheet" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style2.css">
+    <title>Enaland NIG Limited</title>
+</head>
+
+<body>
+    <div>
+        <%- body %>
+    </div>
+
+    <!-- locl js -->
+    <script src="/js/jquerymin.js"></script>
+    <script src="/js/jquery.PrintArea.js"></script>
+    <script src="/js/jquery.dataTables.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/cleave.min.js"></script>
+    <script>
+
+        var cleaveNumera27 = new Cleave('.cashnav', {
+            numeral: true,
+            numeralThousandsGroupStyle: 'thousand'
+        });
+    </script>
+    <script>
+
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                paging: false,
+            });
+        });
+
+        $.extend($.fn.dataTable.defaults, {
+            ordering: false
+        });
+
+
+        $(document).ready(function () {
+            $("#printButton").click(function () {
+                var mode = 'iframe'; //popup
+                var close = mode == "popup";
+                var options = { mode: mode, popClose: close };
+                $("#printableArea").removeClass("smalls");
+                $("#printableArea").addClass("big");
+                $("#printableArea2").addClass("big");
+                $("#printableArea").printArea(options);
+                $("#printableArea2").printArea(options);
+                $("#printableArea").removeClass("big");
+                $("#printableArea2").removeClass("big");
+                $("#printableArea").addClass("smalls");
+            });
+        });
+    </script>
+</body>
+
+</html>

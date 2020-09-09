@@ -1,0 +1,112 @@
+function Shortlist(favUrl, $shortlist, initialCount) {
+    var toggled = initialCount > 0;
+    var count = initialCount;
+
+    if (toggled && !!$shortlist) {
+        $shortlist.foundation('toggle');
+    }
+
+    function createTile(data) {
+        var shortlistTile = $('<div class="shortlist__design"></div>')
+            .on('click', removeFromShortlist)
+            .attr('data-shortlist', data.LogoToken)
+            .attr('data-shortlist-text', !data.Text ? '' : data.Text)
+            .attr('data-shortlist-layout', !data.LayoutOrientation ? '' : data.LayoutOrientation)
+            .append(
+                $('<div class="responsive-embed"></div>')
+                    .append($('<img class="responsive-embed__image" alt="shortlisted design" />')
+                        .attr('src', data.ImageUrl))
+            );
+
+        return shortlistTile;
+    }
+
+    function updateTile(data) {
+        if (data.length <= 0 && toggled) {
+            toggled = false;
+            if (!!$shortlist) {
+                $shortlist.foundation('toggle');
+            }
+        }
+
+        $('#panel-shortlist').empty();
+        $(data).each(function (i, val) {
+            $('#panel-shortlist').prepend(createTile(val));
+        });
+    }
+
+    function toggleShortlist(e) {
+        if (!toggled) {
+            toggled = true;
+            if (!!$shortlist) {
+                $shortlist.foundation('toggle');
+            }
+        }
+        $(e.currentTarget).find('i.card-design__icon-shortlist').foundation('toggle');
+    }
+
+    function setFavourite(e, add) {
+        var $target = $(e.target);
+        var token = $target.attr('data-shortlist');
+        var text = $target.attr('data-shortlist-text');
+        var layout = $target.attr('data-shortlist-layout');
+
+        if (add) {
+            count++;
+        } else {
+            count--;
+            if (count <= 0 && toggled) {
+                toggled = false;
+                if (!!$shortlist) {
+                    $shortlist.foundation('toggle');
+                }
+            }
+        }
+
+        return new Promise(function (resolve, reject) {
+            $.post(favUrl, {token: token, add: add, text: text, layout: layout})
+                .done(function (data) {
+                    updateTile(data);
+                    resolve();
+                });
+        });
+    }
+
+    function removeFavourite(e) {
+        return setFavourite(e, false);
+    }
+
+    function removeFromShortlist(e) {
+        removeFavourite(e).then(function () {
+            var $target = $(e.target);
+            var shortlist = $target.data('shortlist');
+            var text = $target.data('shortlist-text');
+            var layout = $target.data('shortlist-layout');
+            $('i[data-shortlist="' + shortlist + '"][data-shortlist-text="' + text + '"][data-shortlist-layout="' + layout + '"]').removeClass('is-shortlisted');
+        });
+    }
+
+    this.addFavourite = function (e) {
+        return setFavourite(e, true);
+    };
+
+    this.toggleShortlist = function (e) {
+        return toggleShortlist(e);
+    };
+
+    this.removeFromShortlist = function (e) {
+        removeFromShortlist(e)
+    };
+
+    this.removeFavourite = function (e) {
+        removeFavourite(e);
+    };
+
+    this.setToggled = function (value) {
+        toggled = value;
+    };
+
+    this.setCount = function (value) {
+        count = value;
+    }
+}

@@ -1,0 +1,149 @@
+<!-- show table -->
+
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand ml-5 firstmoney" href="/">
+        <span class="text-info">Enaland NIG </span><span class="text-warning">LIMITED</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav m-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">
+                    Home <span class="sr-only">(current)</span>
+                </a>
+            </li>
+
+            <% if (req.user.isAdmin) { %>
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard">
+                    Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/project">
+                    Projects
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin">
+                    Admin
+                    <i class="fas fa-user-shield pl-2"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <% } %>
+                <form action="/auth/logout" method="post">
+                    <button type="submit" class="btn nav-item btn-info text-white">
+                        Logout
+                        <i class="fas fa-sign-out-alt pl-2"></i>
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </div>
+    <div class="userDetail">
+        <li class="nav-item">
+            <span class="pl-5 text-white" style="font-size: 1.4em;">Cash left: </span>: <input class="cashnav"
+                type="text" value="<%= req.user.cash %>" readonly
+                style="background: transparent; color: yellow; font-size: 1.3em; border: none;" />
+        </li>
+    </div>
+</nav>
+
+<div class="ticket-detail bg-secondary printableArea black-and-white">
+    <div>
+        <% if(ticket.imgURI){ %>
+        <img src="<%= ticket.imgURI %>" alt="" class="captured-image" srcset>
+        <% } else { %>
+        <h2 class="text-center text-white">No Footage Was Captured</h2>
+        <% } %>
+    </div>
+    <div class="actions container mt-1 mb-1"
+        style="display: flex; margin:auto; text-align: center; justify-content: center; align-items: center">
+        <button class="btn-info btn" id="printButton" onclick="change()" }>
+            <i class="fas fa-print"></i>
+            Print
+        </button>
+        <% if(req.user.isAdmin){ %>
+        <form action="/ticket/<%= ticket.id %>" method="POST" class="ml-5">
+            <button class="btn-danger btn printbtn2" type="submit">
+                <i class="fas fa-trash"></i>
+                Delete
+            </button>
+        </form>
+        <% } %>
+    </div>
+    <div class=" container"
+        style="width: 100%; display: flex; flex-direction: column; height: 100vh; width: 100vw; justify-content: center; align-items: center; margin: auto">
+        <div class="container rounded py-3 smalls" id="printableArea">
+            <div class="logo-wrap">
+                <h1>ENALAND BANKING SYSTEM</h1>
+            </div>
+
+            <div class="ticket">
+                <div>ACCOUNT NAME <span class="col">:</span></div>
+                <div><%= ticket.name %></div>
+                <div>CLIENT NAME <span class="col">:</span></div>
+                <% if(ticket.name == ticket.clientName){ %>
+                <div>SAME PERSON</div>
+                <% } else { %>
+                <div><%= ticket.clientName %></div>
+                <% } %>
+                <div>ATTENDANT NAME <span class="col">:</span></div>
+                <div><%= ticket.cashier.firstname %> <%= ticket.cashier.lastname %></div>
+                <div>ACCOUNT NUMBER <span class="col">:</span></div>
+                <div><%= padAccountNum(ticket.accNum) %></div>
+                <div>REFERENCE NUMBER <span class="col">:</span></div>
+                <div><%= padRefNum(ticket.refNum) %></div>
+                <div>BANK NAME <span class="col">:</span></div>
+                <div><%= ticket.bankName %></div>
+                <div>PHONE NUMBER:</div>
+                <div class=""><%= ticket.customerNum || "None" %></div>
+                <div>TRANSACTION TYPE <span class="col">:</span></div>
+                <div><%- ticket.type %></div>
+                <div>Status <span class="col">:</span></div>
+                <div class=""><%= ticket.status %></div>
+                <div>AMT <span class="col">:</span></div>
+                <div><%= ticket.amount %> NGN</div>
+                <div>FEE <span class="col">:</span></div>
+                <div><%= ticket.fee %> NGN</div>
+                <div>CARD TYPE <span class="col">:</span></div>
+                <div class=""><%= ticket.card %></div>
+                <div>DATE<span class="col">:</span></div>
+                <div class=""><%= moment(ticket.date).format("DD-MM-YYYY") %></div>
+                <div>TIME <span class="col">:</span></div>
+                <div class=""><%= moment(ticket.time).format("HH:mm") %></div>
+            </div>
+            <div style="border-bottom: 1px dotted #000; padding: 2px 1px; width:100%;"></div>
+            <div class="ticketfooter">
+                <p class="text-center">For enquiries, suggestions or complaint</p>
+                <p class="text-center">Contact Enaland NIG Limited</p>
+                <p class="text-center">
+                    <span class="text-center mr-1 ml-1" style="border-right:1px dotted #000">
+                        <i class="fas fa-phone pl-2"></i>
+                        08078561982
+                    </span>
+                    <span class="text-center">
+                        <i class="fas fa-envelope pl-1"></i>
+                        support@enaland.com
+                    </span></p>
+                <p class="text-center">Thanks for your patronage</p>
+                <div style="border-bottom: 1px dotted #000; padding: 2px 1px; width:100%;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener("keydown", e => {
+            if (e.keyCode == 13) {
+                document.getElementById("printButton").click();
+            }
+        });
+    </script>
+</div>
+
+<%- include("footer") %>

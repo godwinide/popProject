@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- css cdn links -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style2.css">
+    <title>Game Corner Virtual </title>
+</head>
+
+<body style="background: rgb(44, 42, 42);">
+
+    <header>
+        <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+            <a class="navbar-brand text-danger text-bold" href="#">Game <span class="text-success">Corner</span>
+                <span class="text-warning">Virtual</span></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse nav-week" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link active weekHolder">WEEK <%= parseInt(week) + 1 %><span
+                            class="sr-only">(current)</span></a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- tab menu -->
+        <ul class="nav nav-pills my-3 mx-2" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
+                    aria-controls="pills-home" aria-selected="true">
+                    <i class="fas fa-users-cog"></i>
+                    Settings</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-profile-tab live" data-toggle="pill" href="#pills-profile" role="tab"
+                    aria-controls="pills-profile" aria-selected="false">
+                    <i class="fas fa-shield-alt"></i>
+                    Live</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab"
+                    aria-controls="pills-contact" aria-selected="false">
+                    <i class="far fa-window-restore"></i>
+                    Result</a>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <!-- prematch settings -->
+
+                <div class="prematch rounded">
+                    <h2 class="text-center text-warning p-2">PREMATCH SETTINGS</h2>
+                    <div class="container">
+                        <form action="" class="settings-form">
+                            <div class="grid-layout">
+                                <div class="grid">PLAYERS</div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control players" id="playerList"
+                                        placeholder="Enter player names spearated by a space">
+                                    <small id="playersHelp" class="form-text text-muted"></small>
+                                </div>
+
+                                <div class="grid">NO OF PLAYERS</div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control noPlayers" id="playerList" placeholder="0"
+                                        readonly>
+                                    <small id="playersHelp" class="form-text text-muted"></small>
+                                </div>
+
+
+                                <div class="grid">STAKE</div>
+                                <div class="form-group">
+                                    <input type="number" class="form-control stake" id="playerList"
+                                        placeholder="stake per player" value="0">
+                                    <small id="playersHelp" class="form-text text-muted"></small>
+                                </div>
+
+
+                                <div class="grid">POTENTIAL WIN</div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control potWin" id="playerList" placeholder="0"
+                                        readonly>
+                                    <small id="playersHelp" class="form-text text-muted"></small>
+                                </div>
+
+
+                                <div class="grid">PAYABLE WIN</div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control payWin" id="playerList" placeholder="0"
+                                        readonly>
+                                    <small id="playersHelp" class="form-text text-muted"></small>
+                                </div>
+                            </div>
+                        </form>
+                        <div>
+                            <button class="btn btn-success start" id="start">Place BET</button>
+                            <button disabled class="betPrinter btn btn-secondary start" id="onePrint">Print</button>
+                            <button class="btn btn-secondary" data-toggle="modal"
+                                data-target="#exampleModal1">Tickets</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <!-- match settings -->
+                <div class="match">
+                    <div class="first text-white">
+                        <div class="stake">
+                            <h3>STAKE <span class="text-warning">(N)<span class="stakeHTML"></span> </span></h3>
+                        </div>
+                        <div class="time-info">
+                            <div class="time">0</div>
+                        </div>
+                        <div class="win">
+                            <h3>POT WIN <span class="text-warning">(N) <span class="potWinHTML"></span> </span></h3>
+                        </div>
+                    </div>
+
+                    <div class="match-table bg-dark text-white">
+                        <!-- matches goes here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                <div class="result-section bg-dark text-white text-center">
+                    <h2>Winner Of Week <span class="weekHTML"><%= parseInt(week) + 1 %></span></h2>
+                    <h1 class="display-2 winner">No Winner Yet</h1>
+                    <h2 class="display-4 text-success">Win Payout <span class="text-warning potWinHTML2">(N) 0</span>
+                    </h2>
+                </div>
+            </div>
+
+        </div>
+        </div>
+        </div>
+
+        <!-- tickets -->
+
+        <div>
+            <% include ./ticketModal {bets}%>
+        </div>
+
+        <div class="footer bg-dark">
+        </div>
+
+
+        <!-- js cdn links -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+
+        <!-- local js -->
+        <script src="/js/domAnimate.js" type="module"></script>
+        <script src="/js/randomizer.js" type="module"></script>
+        <script src="/js/scoreProbability.js" type="module"></script>
+        <script src="/js/logos.js" type="module"></script>
+        <script src="/js/game.js" type="module"></script>
+        <script src="./js/formValidator.js" type="module"></script>
+        <script src="./js/betPrinter.js" type="module"></script>
+</body>
+
+</html>

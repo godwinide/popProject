@@ -1,0 +1,147 @@
+<!-- modal box -->
+<%- include('modal', {user}) %>
+<div class="mt-4 mb-5 mx-4">
+    <h2 class="my-4">Transaction Records</h2>
+    <div class="actions my-3">
+        <button type="button" class="btn btn-primary addbtn" id="openModal" data-toggle="modal"
+            data-target="#exampleModal">
+            <i class="fas fa-plus pl-2"></i>
+            Add Record
+        </button>
+    </div>
+
+    <div class="table-responsive-md" width="100%" id="printableArea">
+        <table id="myTable" class="table table-striped table-bordered w-auto" cellspacing="0" width="100%"
+            >
+            <thead class="bg-dark text-white">
+                <tr>
+                    <th class="th-sm">Name
+
+                    </th>
+                    <th class="th-sm">Bank Name
+
+                    </th>
+                    <th class="th-sm">Transaction Type
+
+                    </th>
+                    <th class="th-sm">Amount
+
+                    </th>
+                    <th class="th-sm">Fee
+
+                    </th>
+                    <th class="th-sm">Account Number
+
+                    </th>
+                    <th class="th-sm">Card Type
+
+                    </th>
+                    <th class="th-sm">Date
+
+                    </th>
+                    </th>
+                    <th class="th-sm">Time
+
+                    </th>
+                    <% if(user.isAdmin){ %>
+                    <th class="th-sm">Att
+
+                    </th>
+                    <% }  %>
+                    <th class="th-sm">Status
+
+                    </th>
+                    <th class="th-sm">Action
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <% trans.forEach(function(tr){ %>
+
+                <tr>
+                    <td><%= tr.clientName %></td>
+                    <td><%= tr.bankName %></td>
+                    <td><%= tr.type %></td>
+                    <td id="TableAmountField"><%= tr.amount %></td>
+                    <td id="TableFeeField"><%= tr.fee %></td>
+                    <td><%= tr.accNum %></td>
+                    <td><%= tr.card %></td>
+                    <td><%=  moment(tr.date).format("DD-MM-YYYY") %></td>
+                    <td><%= moment(tr.date).format("HH:mm") %></td>
+                    <% if(user.isAdmin){ %>
+                    <td><%= tr.cashier.firstname %></td>
+                    <% }  %>
+                    <td><%= tr.status %></td>
+                    <td>
+                        <a href="/ticket/<%= tr.id %>" class="btn btn-info">
+                            <i class="fas fa-eye"></i>
+                            view</a>
+                    </td>
+                </tr>
+
+                <% }); %>
+            </tbody>
+            <tfoot class="bg-dark text-white">
+                <tr>
+                    <th class="th-sm">Name
+
+                    </th>
+                    <th class="th-sm">Bank Name
+
+                    </th>
+                    <th class="th-sm">Transaction Type
+
+                    </th>
+                    <th class="th-sm">Amount
+
+                    </th>
+                    <th class="th-sm">Fee
+
+                    </th>
+                    <th class="th-sm">Account Number
+
+                    </th>
+                    <th class="th-sm">Card Type
+
+                    </th>
+                    <th class="th-sm">Date
+
+                    </th>
+                    <th class="th-sm">Time
+
+                    </th>
+                    <% if(user.isAdmin){ %>
+                    <th class="th-sm">Att
+
+                    </th>
+                    <% }  %>
+                    <th class="th-sm">Status
+
+                    </th>
+                    <th class="th-sm">Action
+
+                    </th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <script>
+
+        const modalBtn = document.querySelector("#openModal");
+        const dateInput = document.querySelector("#dateInput");
+        // update date input
+        setInterval(() => dateInput.value = new Date(), 5000);
+
+        var cleaveNumera = new Cleave('#TableFeeField', {
+            numeral: true,
+            numeralThousandsGroupStyle: 'thousand'
+        });
+        var cleaveNumera2 = new Cleave('#TableAmountField', {
+            numeral: true,
+            numeralThousandsGroupStyle: 'thousand'
+        });
+    </script>
+</div>
